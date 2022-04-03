@@ -1,0 +1,31 @@
+
+body {
+    font-family: 'Hahmlet', serif;
+}
+form{
+    padding:10pt;
+    border:5pt groove cornsilk;
+}
+p{
+    font-size: 15px;
+    padding: 5px;
+}
+h1{
+    text-align:center;
+    background-color:bisque;
+}
+input[type=submit]{
+    color:blue;
+    font-size: 15px;
+    margin: 10px;
+    height: 30px;
+}
+input[name=age]{
+    width: 40px;
+}
+input[type=reset]{
+    color:violet;
+    font-size: 15px;
+    margin:10px;
+    height: 30px;
+}
