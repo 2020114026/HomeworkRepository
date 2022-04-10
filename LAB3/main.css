@@ -1,0 +1,117 @@
+
+body {
+    font-family: 'Hahmlet', serif;
+}
+form{
+    padding:10pt;
+    border:5pt groove cornsilk;
+}
+
+h3{
+    text-align: center;
+}
+.hovro{
+    width: 300px;
+    height: 300px;
+
+    transition:2s transform;
+}
+.hovro:hover{
+    transform: rotate(360deg)
+}
+.bigger{
+    width: 300px;
+    height: 300px;
+    transition:2s transform;
+}
+.bigger:hover{
+    transform: scale(1.666);
+
+
+
+}
+
+.selling{
+    display: block;
+    margin-left:auto;
+    border: 1px solid black;
+    width: 300px;
+    height: 300px;
+    padding: 100px;
+    margin-right:auto;
+    text-align: center;
+    list-style-type : none;
+    align-self: center;
+    display: inline-block;
+
+}
+p{
+    font-size: 15px;
+    padding: auto;
+}
+a{
+    text-align: center;
+    float: left;
+    margin: 10px;
+    padding: auto;
+}
+button{
+    background-color: bisque;
+    font-size: 15px;
+}
+
+input[type=submit]{
+    color:blue;
+    font-size: 15px;
+    margin: 10px;
+    height: 30px;
+}
+input[name=age]{
+    width: 40px;
+}
+input[type=reset]{
+    color:violet;
+    font-size: 15px;
+    margin:10px;
+    height: 30px;
+}
+header{
+    animation-name: movingheader;
+    animation-duration: 2s;
+    padding: auto;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    height: 50px;
+    width: 1020px;
+    white-space: nowrap;
+}
+@keyframes movingheader {
+    from {
+        width: 250%;
+    }
+    to {
+        width: 1020px;
+    }
+  }
+nav{
+    text-align: center;
+}
+.navb {
+    display: inline-block;
+    list-style-type : none;
+    text-align: center;
+}
+.navul{
+    display: inline-block;
+    text-align: center;
+}
+ul{
+    
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+
+    
+}
+
