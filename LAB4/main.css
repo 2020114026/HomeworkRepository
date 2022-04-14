@@ -196,15 +196,24 @@ flex: 1;
         flex-direction: column;
         margin:auto;
     }
+    .column{
+        padding:auto;
+        margin:auto;
+    }
     .selling{
         width:80%;
         height: 80%;
-        padding:0.1em;
+        padding-top:3%;
+
     }
     .bigger{
+        width:90%;
+        height:90%;
         padding-top:0%;
     }
     .hovro{
+        width:90%;
+        height: 90%;
         padding-top:0%;
     }
   }
