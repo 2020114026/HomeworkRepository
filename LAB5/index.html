@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>E-commerce main page</title>
+        <link rel="stylesheet" type="text/css" href="main.css"><link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap" rel="stylesheet">  
+        <script>
+            function createPost(fromNum){
+            fetch('./product.json')
+                .then((res)=>{
+                    return res.json();
+                })
+                .then(function(data){
+                    var items = '';
+                    console.log(data)
+                    var flag = true;
+                    var i=0;
+                    for (const [key, value] of Object.entries(data)){
+                        for (const [key2, value2] of Object.entries(value)){
+                            if (i>=fromNum && fromNum+4>i){
+                            if (flag){
+                            items += '<ul class="column"><li class="selling"><img class="hovro"  onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            items += value2['img'];
+                            items += '"></img>';
+                            items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            items+='</li>';
+                            flag=false;
+                        }else{
+
+                            //items += `<li class="selling"><img class="bigger" src="${value2['img']}"></img></li></ul><br>`;
+
+                            items += '<li class="selling"> <img class="bigger"  onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            items += value2['img'];
+                            items += '"></img>';
+                            items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            items+='</li></ul><br>';
+                            flag=true;
+                        }
+                    }
+                    i+=1;
+                    }}
+                                     
+                    var table = document.getElementById('table');
+                    table.innerHTML+=items;
+                    console.log(table);      
+                    });
+                }
+
+            function scroller(start, until){
+                var j=4
+                
+                window.addEventListener('scroll',xxx=()=>{
+                const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+                
+                if(scrollTop + clientHeight > scrollHeight - 5 && j<until){
+                    createPost(j)
+                    j+=4;
+                    console.log(j);
+                }
+            });
+            }
+
+
+            document.addEventListener("DOMContentLoaded", loaded());
+            function loaded(){
+                createPost(0);
+                fetch('./product.json')
+                .then((res)=>{
+                    return res.json();
+                })
+                .then(function(data){
+                    var count=0;
+                    for (var obj in data){
+                        for (var obj2 in obj){
+                            count+=1;
+
+                        }
+                    }
+                    return count;
+                })
+                .then(function ( count ){scroller(0, count);})
+            }
+
+            
+
+        </script> 
+    </head>
+    <body>
+        <header>
+            <h1>E-commerce main page</h1>
+        </header>
+        <div id="main">
+
+
+            <ul class="navul">
+                <li class="navitem"><a href="signup.html">
+                    <button>회원가입</button>
+                </a></li>
+                <li class="navitem"><a href="login.html">
+                    <button>로그인</button>
+                </a></li>
+            </ul>
+
+
+            <h3>판매 물품들</h3>
+            <h4 id="fortest" style="text-align:center;"><br> </h4>
+            <div style="text-align:center;">
+                <label for="categories">카테고리별로 필터링하기: </label>
+                <select name="categories" id="cate" style="width: 100px;">
+                    <option value="all">전체 보기</option>
+                    <option value="necklace">목걸이</option>
+                    <option value="ring">반지</option>
+                    <option value="earling">귀걸이</option>
+                    
+                </select>
+            </div>
+            <div style="text-align: center; ">
+                <label for="검색">키워드로 검색하기: </label>
+                <form style="display: inline-block;" name = "검색" onsubmit="searchfunc();return false;">
+                <input type="input" id="myInput" placeholder="검색어 입력">
+                </form>
+            </div>
+
+            <div class="row" id="table"> 
+            </div>
+            
+
+
+            <div class="paragraph">
+                <h4>
+                    E-commerce website 소개
+                </h4>
+                <p>
+                    주로 보석을 사용하는 귀금속 공예 및 악세서리를 판매하는 웹사이트입니다.
+                </p>
+            </div>
+
+
+         </div>
+
+         <script>
+
+             
+            const categ = document.getElementById('cate');
+            cate.addEventListener('change', (event)=>{
+                window.removeEventListener('scroll',xxx);
+                document.getElementById("fortest").innerHTML = "<br>";
+                
+                var flag=true;
+                var nextcontent=[];
+                fetch('./product.json')
+                .then((res)=>{
+                    return res.json();
+                })
+                .then(function(data){
+                    const value3 = data[event.target.value];
+                    if (event.target.value!="all"){
+                    var items='';
+                    var i=0;
+                    for (const [key2, value2] of Object.entries(value3)){
+                        if (i<4){
+                            
+                            if (flag){
+                            items += '<ul class="column"><li class="selling"><img class="hovro"  onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            items += value2['img'];
+                            items += '"></img>';
+                            items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            items+='</li>';
+                            flag=false;
+                        }else{
+
+                            //items += `<li class="selling"><img class="bigger" src="${value2['img']}"></img></li></ul><br>`;
+
+                            items += '<li class="selling"> <img class="bigger"  onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            items += value2['img'];
+                            items += '"></img>';
+                            items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            items+='</li></ul><br>';
+                            flag=true;
+                        }} else{
+                            var item2='';
+                            if (flag){
+                                item2 += '<ul class="column"><li class="selling"><img class="hovro"  onclick="clickdesc(\''+value2['name']+'\')" src="'; 
+                                item2 += value2['img'];
+                                item2 += '"></img>';
+                                item2+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                                item2+='</li>';
+                                flag=false;
+                            }else{
+
+                                //items += `<li class="selling"><img class="bigger" src="${value2['img']}"></img></li></ul><br>`;
+
+                                item2 += '<li class="selling"> <img class="bigger" onclick="clickdesc(\''+value2['name']+'\')" src="';
+                                item2 += value2['img'];
+                                item2 += '"></img>';
+                                item2+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                                item2+='</li></ul><br>';
+                                flag=true;
+                            }
+
+                            nextcontent.push(item2);
+                        }
+                        i+=1;
+                    }
+                    var table = document.getElementById('table');
+                    table.innerHTML=items;
+
+                    i=0
+                    window.addEventListener('scroll',xxy=()=>{
+                        const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+                
+                        if(scrollTop + clientHeight > scrollHeight - 5 ){
+                            var table = document.getElementById('table');
+                            if (i< nextcontent.length){
+                                var str= '';
+                                str+=nextcontent[i];
+                                str+=nextcontent[i+1];
+
+                                table.innerHTML+=str;
+                                
+                                i+=2;
+                            }
+                            
+                        }
+                        
+            })}else{
+                document.getElementById('table').innerHTML='';
+                loaded();
+            }
+        })
+        });
+
+        function xxy(){}
+        function searchfunc(){
+            var x = document.getElementById("myInput");
+            window.removeEventListener("scroll", xxx);
+            window.removeEventListener("scroll", xxy);
+            document.removeEventListener("DOMContentLoaded", loaded);
+            var targetword = x.value;
+            if (targetword.length==0){
+                return false;
+            }
+            document.getElementById("fortest").innerHTML = '키워드 "'+targetword+'"로 검색하는 중입니다';
+            fetch('./product.json')
+            .then((res)=>{
+                return res.json();
+            })
+            .then(function(data){
+                var rightitems=[];
+                for (const [key4, value4] of Object.entries(data)){
+                    
+                    var result = value4.filter(item=> item.name.includes(targetword));
+                    if (result.length!=0){
+                        var i=0
+                    while (i<result.length){
+                        console.log(result[i]);
+                        rightitems.push(result[i]);
+                        i+=1;
+                    }}else{
+                        document.getElementById("table").innerHTML='';
+                    }
+                }
+                console.log(rightitems);
+                var flag=true;
+                var nextcontent=[];
+                var items='';
+                var i=0;
+
+                for (const [key2, value2] of Object.entries(rightitems)){
+                    if (i<4){
+                        
+                        if (flag){
+                        items += '<ul class="column"><li class="selling"><img class="hovro" onclick="clickdesc(\''+value2['name']+'\')" src="';
+                        items += value2['img'];
+                        items += '"></img>';
+                        items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                        items += '</li>';
+                        flag=false;
+                    }else{
+
+                        //items += `<li class="selling"><img class="bigger" src="${value2['img']}"></img></li></ul><br>`;
+
+                        items += '<li class="selling"> <img class="bigger" onclick="clickdesc(\''+value2['name']+'\')" src="';
+                        items += value2['img'];
+                        items += '"></img>';
+                        items+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                        items+='</li></ul><br>';
+                        flag=true;
+                    }} else{
+                        var item2='';
+                        if (flag){
+                            item2 += '<ul class="column"><li class="selling"><img class="hovro" onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            item2 += value2['img'];
+                            item2 += '"></img>';
+                            item2+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            item2+='</li>';
+                            flag=false;
+                        }else{
+
+                            //items += `<li class="selling"><img class="bigger" src="${value2['img']}"></img></li></ul><br>`;
+
+                            item2 += '<li class="selling"> <img class="bigger" onclick="clickdesc(\''+value2['name']+'\')" src="';
+                            item2 += value2['img'];
+                            item2 += '"></img>';
+                            item2+='<div class="description" id="'+value2['name']+'">제품명: '+value2['name']+'<br>가격: '+value2['price']+'</div>';
+                            item2+='</li></ul><br>';
+                            flag=true;
+                        }
+
+                        nextcontent.push(item2);
+                    }
+                    i+=1;
+                    var table = document.getElementById('table');
+                    console.log(items);
+                    table.innerHTML=items;
+                }
+
+                i=0
+                window.addEventListener('scroll',xxz=()=>{
+                    const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+
+                    if(scrollTop + clientHeight > scrollHeight - 5 ){
+                        var table = document.getElementById('table');
+                        if (i< nextcontent.length){
+                            if(nextcontent.length-i>=2){
+                            var str= '';
+                            str+=nextcontent[i];
+                            str+=nextcontent[i+1];
+
+                            table.innerHTML+=str;
+                            
+                            i+=2;}else if (nextcontent.length-i==1){
+                                var str= '';
+                                str+=nextcontent[i];
+                                table.innerHTML+=str;
+                                i+=1;
+                            }
+                }}})
+                
+            })
+               return false;
+        }
+
+        function clickdesc(name){
+            console.log("click triggered");
+            const desc = document.getElementById(name);
+            if (desc.style.display=="none"){
+                document.getElementById(name).style.display="block";
+            }else{
+            document.getElementById(name).style.display="block";
+            }
+
+            
+        }
+
+
+
+
+
+         </script>
+    </body>
+</html>
